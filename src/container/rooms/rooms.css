@@ -1,0 +1,58 @@
+.rooms {
+  height: 90vh;
+  width: 20%;
+  border-right: 1px solid grey;
+  overflow: scroll;
+}
+
+.room {
+  height: 20%;
+  width: 100%;
+  border-bottom: 1px solid grey;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.no-rooms {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.no-rooms h3 {
+  color: grey;
+}
+
+.button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1em;
+}
+
+.button button {
+  padding: 6%;
+  margin-top: 5%;
+  font-weight: bold;
+}
+
+.room-details {
+  max-width: 60%;
+  overflow: scroll;
+  padding-left: 3%;
+}
+
+.user-available {
+  color: grey;
+}
+
+.join-button {
+  width: 20%;
+}
+
+.join-button button {
+  padding: 8%;
+  font-weight: bold;
+}

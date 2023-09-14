@@ -1,0 +1,73 @@
+.main {
+  height: 90vh;
+  width: 80%;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.main-start {
+  height: 90vh;
+  width: 80%;
+}
+
+.options {
+  margin-top: 5%;
+}
+
+.options input {
+  margin-bottom: 2%;
+}
+
+.question {
+  margin-top: 5%;
+}
+
+.ques-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10%;
+}
+
+.timer {
+  height: 4rem;
+  width: 4rem;
+  border: 2px solid grey;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: large;
+}
+
+.submit-btn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.submit-btn button {
+  padding: 1%;
+  font-weight: bold;
+}
+
+.submit-btn > button {
+  margin-right: 2em;
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container button {
+  padding: 0.5rem;
+  width: 9%;
+  font-weight: bold;
+}
+
+h4 {
+  color: grey;
+}
