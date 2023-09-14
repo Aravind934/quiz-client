@@ -7,12 +7,16 @@ import { toast } from "react-toastify";
 function Main() {
   let { roomDetail, rooms, setRoomDetail } = useContext(RoomContext);
   let [count, setCount] = useState(0);
+  let [freezSubmit, setFreezSubmit] = useState(false);
+  let [answer, setAnswer] = useState(null);
   let [quiz, setQuiz] = useState(null);
   let [prevQIDs, setPrevQIDs] = useState([]);
   const [points, setPoints] = useState(0);
   let [qNo, setQNo] = useState(0);
   const [interval, setIntervalValue] = useState(null);
   const startQuiz = () => {
+    setAnswer(null);
+    setFreezSubmit(false);
     if (interval) {
       clearInterval(interval);
       setIntervalValue(null);
@@ -45,10 +49,22 @@ function Main() {
       setQuiz(res?.question);
       setPrevQIDs((prev) => [...prev, res?.question?.id]);
     });
+    socket.on("answer", (res) => {
+      if (res?.isCorrect) {
+        setPoints((prev) => prev + 10);
+        return toast.info("Correct answer");
+      }
+      toast.info("Wrong answer");
+    });
   }, []);
   const startGame = () => {
     let temp = rooms?.find((room) => room?.name === roomDetail?.room);
     return temp?.Players?.length >= 2;
+  };
+  const checkAnswer = () => {
+    if (!answer) return toast.error("Please choose one option");
+    setFreezSubmit(true);
+    socket.emit("answer", { quiz, answer });
   };
   if (!roomDetail?.joinedRoom || !startGame())
     return (
@@ -75,15 +91,22 @@ function Main() {
   return (
     <div className="main">
       <div className="ques-details">
-        <p>Points : 0</p>
+        <p>Points : {points}</p>
         <div className="timer">{count}</div>
       </div>
       <div className="question">{`${qNo} )${quiz?.question}`}</div>
       <div className="options">
-        {quiz?.QuestionOptions?.map((item) => {
+        {quiz?.QuestionOptions?.map((item, i) => {
           return (
             <>
-              <input type="radio" value={item?.option} /> {item?.option} <br />
+              <input
+                key={i}
+                type="radio"
+                value={item?.option}
+                checked={answer === item?.option}
+                onChange={() => setAnswer(item?.option)}
+              />{" "}
+              {item?.option} <br />
             </>
           );
         })}
@@ -91,7 +114,9 @@ function Main() {
       </div>
       <div className="submit-btn">
         <button onClick={startQuiz}>{`Next  `}</button>
-        <button disabled={count >= 10}>Submit</button>
+        <button disabled={count >= 10 || freezSubmit} onClick={checkAnswer}>
+          Submit
+        </button>
       </div>
     </div>
   );
